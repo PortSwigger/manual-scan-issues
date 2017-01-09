@@ -1,0 +1,11 @@
+Uuid: 3ebca77f69434faea1e3e97e0269fe17
+ExtensionType: 1
+Name: Manual Scan Issues
+ScreenVersion: 1.0.2
+SerialVersion: 1
+MinPlatformVersion: 0
+ProOnly: True
+Author: Joshua Smith & Benjamin Wireman, Dynetics
+ShortDescription: Allows users to manually create custom issues within the Burp Scanner results.
+EntryPoint: build/libs/manual-scan-issues-all.jar
+BuildCommand: gradle -PburpJar=$BURP_JAR fatJar
