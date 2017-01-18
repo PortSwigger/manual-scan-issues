@@ -8,4 +8,4 @@ ProOnly: True
 Author: Joshua Smith & Benjamin Wireman, Dynetics
 ShortDescription: Allows users to manually create custom issues within the Burp Scanner results.
 EntryPoint: build/libs/manual-scan-issues-all.jar
-BuildCommand: gradle -PburpJar=$BURP_JAR fatJar
+BuildCommand: gradle fatJar
