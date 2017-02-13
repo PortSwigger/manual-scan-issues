@@ -1,6 +1,7 @@
 Uuid: 3ebca77f69434faea1e3e97e0269fe17
 ExtensionType: 1
 Name: Manual Scan Issues
+RepoName: manual-scan-issues
 ScreenVersion: 1.0.2
 SerialVersion: 1
 MinPlatformVersion: 0
