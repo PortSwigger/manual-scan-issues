@@ -14,7 +14,7 @@ import java.util.List;
 
 public class BurpExtender implements IBurpExtender, IContextMenuFactory, ActionListener {
     String _applicationName = "ManScanAdd";
-    String _version = "v1.0.2";
+    String _version = "v1.0.3";
     String _request = "";
     String _response = "";
     String _issueName = "";
