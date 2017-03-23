@@ -61,31 +61,41 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ActionL
     List<JMenuItem> _menuItems = new ArrayList<>();
     PrintWriter stdout = null;
     PrintWriter stderr = null;
-    IScanIssue[] _currentIssue = null;
     IHttpRequestResponse[] _currentMessages = null;
+
+    private URL getUrl(IScanIssue[] issues, IHttpRequestResponse[] messages) {
+        if (issues != null && issues.length > 0)
+        {
+            return issues[0].getUrl();
+        }
+
+        if (messages != null && messages.length > 0)
+        {
+            return _helpers.analyzeRequest(messages[0]).getUrl();
+        }
+
+        return null;
+    }
     
     @Override
     public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
         this._invocation = invocation;
-        // Get current issue.
-        _currentIssue = (IScanIssue[]) invocation.getSelectedIssues();
-//        _currentMessages = (IHttpRequestResponse[]) invocation.getSelectedMessages();
-        
+        URL url = getUrl(invocation.getSelectedIssues(), invocation.getSelectedMessages());
+        if (url == null) return null;
+
         // Get the address, protocol, and port from the current issue.
-        String delims = "[/:]";
-        String[] tmpStr = _currentIssue[0].getUrl().toString().split(delims);
-        stdout.println("Address grabbed from selected issue: "+tmpStr[0]+"://"+tmpStr[3]);
-        if(tmpStr[0].equalsIgnoreCase("http"))
+        stdout.println("Address grabbed: "+url.toString());
+        this._portTextField.setText(Integer.toString(url.getPort()));
+        if(url.getProtocol().equalsIgnoreCase("http"))
         {
-            this._portTextField.setText("80");
             this._protocolComboBox.setSelectedIndex(0);
         }
-        else if(tmpStr[0].equalsIgnoreCase("https"))
+        else if(url.getProtocol().equalsIgnoreCase("https"))
         {
-            this._portTextField.setText("443");
             this._protocolComboBox.setSelectedIndex(1);
         }
-        this._urlTextField.setText(_currentIssue[0].getUrl().toString());
+
+        this._urlTextField.setText(url.toString());
         
         return this._menuItems;
     }
@@ -105,7 +115,6 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ActionL
         this._menuItem.addActionListener(this);
         this._addCommentMenuItem = new JMenuItem("Add Comment");
         this._addCommentMenuItem.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 _addCommentDialog.setVisible(true);
@@ -198,7 +207,6 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ActionL
         issueNamePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false), "Issue Name:"));
         issueNamePanel.setLayout(new BoxLayout(issueNamePanel, BoxLayout.X_AXIS));
         this._issueNameTextField.addFocusListener(new FocusListener() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 _issueNameTextField.selectAll();
