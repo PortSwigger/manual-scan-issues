@@ -1,8 +1,9 @@
 Uuid: 3ebca77f69434faea1e3e97e0269fe17
 ExtensionType: 1
 Name: Manual Scan Issues
+RepoName: manual-scan-issues
 ScreenVersion: 1.0.3
-SerialVersion: 2
+SerialVersion: 3
 MinPlatformVersion: 0
 ProOnly: True
 Author: Joshua Smith & Benjamin Wireman, Dynetics
